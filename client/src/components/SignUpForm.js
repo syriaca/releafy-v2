@@ -8,8 +8,10 @@ export default class SignUpForm extends Component {
         super(props);
 
         this.state = {
-            username: '',
-            password: ''
+            user:{
+                username: '',
+                password: ''
+            }
         };
     
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -17,31 +19,24 @@ export default class SignUpForm extends Component {
     };
 
     handleInputChange(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-    
+        const field = event.target.name;
+        const user = this.state.user;
+        user[field] = event.target.value;
+
         this.setState({
-          [name]: value
+            user
         });
     };
     
     handleSubmit(event) {
-        alert('Your username is: ' + this.state.username + ',' + ' Your password is: ' + this.state.password);
-        event.preventDefault();
-        axios.post('/', {
-            username: this.state.username,
-            password: this.state.password
-        }).then(response => {
-            console.log(response.data);
-            if (response.data) {
-                console.log('successful signup');
-            } else {
-                console.log('sign-up error');
-            }
-        }).catch(error => {
+        axios.post('/api/users', this.state.user)
+          .then(function (response) {
+            console.log(response);
+            alert('Your username is: ' + this.state.username + ',' + ' Your password is: ' + this.state.password);          })
+          .catch(function (error) {
             console.log(error);
-        })
+          });
+        event.preventDefault();
     };
     
     render(){
@@ -55,7 +50,7 @@ export default class SignUpForm extends Component {
                     <ControlLabel>Enter a password</ControlLabel>
                     <FormControl name="password" type="password" value={this.state.password} onChange={this.handleInputChange} placeholder="Choose a strong password" />
                 </FormGroup>
-                <Button bsStyle="primary" bsSize="large" type="submit" block>
+                <Button bsStyle="primary" bsSize="large" type="submit" block onClick={this.props.isLogged}>
                     Sign Up
                 </Button>
             </form>

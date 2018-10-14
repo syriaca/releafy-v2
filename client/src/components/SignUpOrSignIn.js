@@ -7,7 +7,9 @@ import {Button} from 'react-bootstrap';
 export default class SignUpOrSignIn extends Component {
     constructor(props) {
         super(props);
-        this.state = {isToggleOn: false};
+        this.state = {
+            isToggleOn: false
+        };
     
         // This binding is necessary to make `this` work in the callback
         this.handleClick = this.handleClick.bind(this);
@@ -24,9 +26,9 @@ export default class SignUpOrSignIn extends Component {
         const toggleForm = this.state.isToggleOn;
         return (
             <div>
-                { toggleForm ? (<SignInForm />):(<SignUpForm />) }
+                { toggleForm ? (<SignUpForm isLogged={this.props.loggedStatus}/>):(<SignInForm isLogged={this.props.loggedStatus}/>) }
                 <Button onClick={this.handleClick} className="btn-default btn" type="submit">
-                    {toggleForm ? 'Sign-Up' : 'Sign-In'}
+                    {toggleForm ? 'Sign-Ip' : 'Sign-Up'}
                 </Button>   
             </div>
         )        

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import {FormGroup, FormControl, Button, ControlLabel} from 'react-bootstrap';
 
 export default class SignInForm extends Component {
@@ -6,8 +7,10 @@ export default class SignInForm extends Component {
         super(props);
 
         this.state = {
-            username: '',
-            password: ''
+            user:{
+                username: '',
+                password: ''
+            }
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -15,17 +18,16 @@ export default class SignInForm extends Component {
     };
 
     handleInputChange(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
+        const field = event.target.name;
+        const user = this.state.user;
+        user[field] = event.target.value;
 
         this.setState({
-            [name]: value
+            user
         });
     };
 
     handleSubmit(event) {
-        alert('Your username is: ' + this.state.username + ',' + ' Your password is: ' + this.state.password);
         event.preventDefault();
     };
 

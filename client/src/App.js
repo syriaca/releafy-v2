@@ -17,9 +17,22 @@ class App extends Component {
       gifs: [],
       tracks: [],
       searchText: '',
+      users: [],
       isLoggedIn: false      
     };
+
+    this.handleLoggedStatus = this.handleLoggedStatus.bind(this);
   } 
+
+
+// Begin API call now when component did mount
+componentDidMount() {
+  // fetch('/api/users')
+  // .then(res => res.json())
+  // .then(json => {
+  //   console.log(json);
+  // })
+}
 
 performSearch = (query) => {
     axios.get(`https://api.giphy.com/v1/gifs/search?q=${query}&limit=3&api_key=${giphyKey}`)
@@ -62,6 +75,12 @@ performSearch = (query) => {
         });
   }
 
+  handleLoggedStatus() {
+    this.setState({
+      isLoggedIn: true
+    })
+  }
+
   render() {
     return (
         <div id="MainContainer" className='main-container'>
@@ -74,7 +93,7 @@ performSearch = (query) => {
               </div>
             ) : 
             (
-              <SignUpOrSignIn />
+              <SignUpOrSignIn loggedStatus={this.handleLoggedStatus}/>
 
               )}
             </main>
