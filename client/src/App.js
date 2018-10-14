@@ -8,6 +8,8 @@ import SignUpOrSignIn from './components/SignUpOrSignIn';
 import SearchForm from './components/SearchForm';
 import ResultList from './components/ResultList';
 import {spotidyClientID, spotifySecret, giphyKey} from './Config.js';
+import {Cookies} from 'react-cookie';
+const cookies = new Cookies();
 
 class App extends Component {
 
@@ -17,21 +19,11 @@ class App extends Component {
       gifs: [],
       tracks: [],
       searchText: '',
-      users: [],
+      username: cookies.get('username'),
       isLoggedIn: false      
     };
 
     this.handleLoggedStatus = this.handleLoggedStatus.bind(this);
-  } 
-
-
-// Begin API call now when component did mount
-componentDidMount() {
-  // fetch('/api/users')
-  // .then(res => res.json())
-  // .then(json => {
-  //   console.log(json);
-  // })
 }
 
 performSearch = (query) => {
@@ -75,16 +67,19 @@ performSearch = (query) => {
         });
   }
 
-  handleLoggedStatus() {
+  handleLoggedStatus(username) {
+    const cookies = new Cookies();
+    cookies.set('username', username, { path: '/' });
     this.setState({
-      isLoggedIn: true
+      isLoggedIn: true,
+      username: username
     })
   }
 
   render() {
     return (
         <div id="MainContainer" className='main-container'>
-          <Header />
+          <Header username={this.state.username} />
           <main className="main-content">
             {this.state.isLoggedIn ? (
                 <div>
@@ -93,7 +88,7 @@ performSearch = (query) => {
               </div>
             ) : 
             (
-              <SignUpOrSignIn loggedStatus={this.handleLoggedStatus}/>
+              <SignUpOrSignIn handleLoggedStatus={this.handleLoggedStatus}/>
 
               )}
             </main>

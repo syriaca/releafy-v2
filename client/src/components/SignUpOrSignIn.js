@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SignUpForm from './SignUpForm';
 import SignInForm from './SignInForm';
 import {Button} from 'react-bootstrap';
+import { withCookies, Cookies } from 'react-cookie';
 
 
 export default class SignUpOrSignIn extends Component {
@@ -11,7 +12,6 @@ export default class SignUpOrSignIn extends Component {
             isToggleOn: false
         };
     
-        // This binding is necessary to make `this` work in the callback
         this.handleClick = this.handleClick.bind(this);
       }
 
@@ -26,9 +26,9 @@ export default class SignUpOrSignIn extends Component {
         const toggleForm = this.state.isToggleOn;
         return (
             <div>
-                { toggleForm ? (<SignUpForm isLogged={this.props.loggedStatus}/>):(<SignInForm isLogged={this.props.loggedStatus}/>) }
+                { toggleForm ? (<SignUpForm handleLoggedStatus={this.props.handleLoggedStatus}/>):(<SignInForm handleLoggedStatus={this.props.handleLoggedStatus}/>) }
                 <Button onClick={this.handleClick} className="btn-default btn" type="submit">
-                    {toggleForm ? 'Sign-Ip' : 'Sign-Up'}
+                    {toggleForm ? 'Sign-In' : 'Sign-Up'}
                 </Button>   
             </div>
         )        

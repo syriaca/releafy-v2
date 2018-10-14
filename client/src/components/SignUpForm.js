@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {FormGroup, FormControl, Button, ControlLabel} from 'react-bootstrap';
+import { withCookies, Cookies } from 'react-cookie';
 
 export default class SignUpForm extends Component {
 
@@ -30,13 +31,18 @@ export default class SignUpForm extends Component {
     
     handleSubmit(event) {
         axios.post('/api/users', this.state.user)
-          .then(function (response) {
-            console.log(response);
-            alert('Your username is: ' + this.state.username + ',' + ' Your password is: ' + this.state.password);          })
-          .catch(function (error) {
-            console.log(error);
-          });
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         event.preventDefault();
+        this.props.handleLoggedStatus(this.state.user.username)
+        this.setState({
+            isLoggedIn: true,
+            username: this.state.user.username
+        })
     };
     
     render(){
@@ -50,7 +56,7 @@ export default class SignUpForm extends Component {
                     <ControlLabel>Enter a password</ControlLabel>
                     <FormControl name="password" type="password" value={this.state.password} onChange={this.handleInputChange} placeholder="Choose a strong password" />
                 </FormGroup>
-                <Button bsStyle="primary" bsSize="large" type="submit" block onClick={this.props.isLogged}>
+                <Button bsStyle="primary" bsSize="large" type="submit" block>
                     Sign Up
                 </Button>
             </form>

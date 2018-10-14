@@ -9,8 +9,8 @@ const users = require('./routes/api/users');
 const app = express();
 
 // Bodyparser Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors())
 
 // DB Config
