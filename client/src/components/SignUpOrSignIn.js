@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import SignUpForm from './SignUpForm';
 import SignInForm from './SignInForm';
 import {Button} from 'react-bootstrap';
-import { withCookies, Cookies } from 'react-cookie';
 
 
 export default class SignUpOrSignIn extends Component {

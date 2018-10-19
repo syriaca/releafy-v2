@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {FormGroup, FormControl, Button, ControlLabel} from 'react-bootstrap';
-import { withCookies, Cookies } from 'react-cookie';
 
 export default class SignUpForm extends Component {
 
