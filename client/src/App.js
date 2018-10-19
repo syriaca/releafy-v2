@@ -48,9 +48,8 @@ performSearch = (query) => {
   console.log('Error fetching and parsing data',  error);
 });
 
-  axios.get('/api/users/spotify')
+  axios.get(`/api/users/spotify/${query}`)
     .then(response => {
-      console.log(response);
         this.setState({
           tracks: response.data.body.tracks.items
         });  
