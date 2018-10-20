@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const users = require('./routes/api/users');
+const spotify = require('./routes/api/spotify');
 
 const app = express();
 
@@ -22,6 +23,7 @@ mongoose
     .catch(err => console.log(err));
 
 app.use('/api/users', users);
+app.use('/api/spotify', spotify);
 
 //Behaviour for production env.
 if (process.env.NODE_ENV === "production") {
