@@ -5,7 +5,6 @@ import Footer from './components/Footer';
 import SignUpOrSignIn from './components/SignUpOrSignIn';
 import SearchForm from './components/SearchForm';
 import ResultList from './components/ResultList';
-import {giphyKey} from './Config.js';
 import {Cookies} from 'react-cookie';
 const cookies = new Cookies();
 
@@ -38,7 +37,7 @@ componentDidMount() {
 }
 
 performSearch = (query) => {
-  axios.get(`https://api.giphy.com/v1/gifs/search?q=${query}&limit=3&api_key=${giphyKey}`)
+  axios.get(`/api/giphy/giphy/${query}`)
   .then(response => {
     this.setState({
       gifs: response.data.data

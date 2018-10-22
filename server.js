@@ -2,9 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const keys = require('./config/keys.js');
 const users = require('./routes/api/users');
 const spotify = require('./routes/api/spotify');
+const giphy = require('./routes/api/giphy');
 
 const app = express();
 
@@ -14,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 // DB Config
-const database = process.env.MONGO_URI || require('./config/keys').mongoURI;
+const database = process.env.MONGO_URI || keys.mongoURI;
 
 // Connect to MongoDB
 mongoose
@@ -24,6 +25,7 @@ mongoose
 
 app.use('/api/users', users);
 app.use('/api/spotify', spotify);
+app.use('/api/giphy', giphy);
 
 //Behaviour for production env.
 if (process.env.NODE_ENV === "production") {

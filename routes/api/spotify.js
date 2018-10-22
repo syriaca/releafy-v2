@@ -1,13 +1,12 @@
 const express = require('express');
 const request = require('request');
+const keys = require('../../config/keys.js');
 const router = express.Router();
 
 // @Route   Get api/token
-// @Desc    Get spotify api token
+// @Desc    Get spotify api token and make a search
 // @Access  Private
 router.get('/spotify/:query', (req, res) => {
-    var client_id = '90c0d6089d534f7da469a3099543796f'; // Your client id
-    var client_secret = '3e85eaaf55c34bf7a8dcd54b06782cd8'; // Your secret
 
     var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
@@ -15,7 +14,7 @@ router.get('/spotify/:query', (req, res) => {
             grant_type: 'client_credentials'
         },
         headers: {
-            'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')),
+            'Authorization': 'Basic ' + (new Buffer(keys.spotidyClientID + ':' + keys.spotifySecret).toString('base64')),
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         json: true
