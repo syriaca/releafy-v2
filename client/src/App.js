@@ -17,7 +17,7 @@ class App extends Component {
       tracks: [],
       searchText: '',
       username: cookies.get('username'),
-      isLoggedIn: false      
+      isLoggedIn: true      
     };
 
     this.handleLoggedStatus = this.handleLoggedStatus.bind(this);
@@ -27,7 +27,7 @@ performSearch = (query) => {
   axios.get(`/api/giphy/giphy/${query}`)
   .then(response => {
     this.setState({
-      gifs: response.data.data
+      gifs: response.data
     });
   })
 .catch((error) =>{
