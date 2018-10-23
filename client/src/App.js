@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import SignUpOrSignIn from './components/SignUpOrSignIn';
+import Login from './components/Login';
 import SearchForm from './components/SearchForm';
 import ResultList from './components/ResultList';
-import {Cookies} from 'react-cookie';
+import {Cookies} from 'react-cookie/cjs';
+import {Button} from 'react-bootstrap';
+
 const cookies = new Cookies();
 
 class App extends Component {
@@ -16,23 +18,33 @@ class App extends Component {
       gifs: [],
       tracks: [],
       searchText: '',
-      username: cookies.get('username'),
+      username: '',
       isLoggedIn: false
     };
 
-    this.handleLoggedStatus = this.handleLoggedStatus.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
 }
 
+// componentDidMount() {
+//   if(cookies.get('username')){
+//     this.setState({
+//       isLoggedIn: true
+//     })
+//   }
+// }
+
+// Perform giphy and spotify search
 performSearch = (query) => {
   axios.get(`/api/giphy/giphy/${query}`)
-  .then(response => {
-    this.setState({
-      gifs: response.data
-    });
-  })
-.catch((error) =>{
-  console.log('Error fetching and parsing data',  error);
-});
+    .then(response => {
+      this.setState({
+        gifs: response.data
+      });
+    })
+  .catch((error) =>{
+    console.log('Error fetching and parsing giphy data',  error);
+  });
 
   axios.get(`/api/spotify/spotify/${query}`)
     .then(response => {
@@ -41,39 +53,54 @@ performSearch = (query) => {
         });  
     })
     .catch(function (error) {
-      console.log(error);
+      console.log('Error fetching and parsing spotify data',  error);
     });
 }
 
-  handleLoggedStatus(username) {
-    const cookies = new Cookies();
-    cookies.set('username', username, { path: '/' });
-    this.setState({
-      isLoggedIn: true,
-      username: username
-    })
+handleLogin(username) {
+  const cookies = new Cookies();
+  cookies.set('username', username, { path: '/' });
+  this.setState({
+    isLoggedIn: true,
+    username: username
+  })
+}
+
+handleLogout(username) {
+  cookies.remove('username');
+  this.setState({
+    isLoggedIn: false,
+    username: ""
+  })
+}
+
+render() {
+  const isLoggedIn = this.state.isLoggedIn;
+  let logoutButton;
+
+  if (isLoggedIn) {
+    logoutButton = <Button onClick={this.handleLogout} className="btn-default btn" type="submit">Logout</Button>  
   }
 
-  render() {
-    return (
-        <div id="MainContainer" className='main-container'>
-          <Header username={this.state.username} />
-          <main className="main-content">
-            {this.state.isLoggedIn ? (
-                <div>
-                  <SearchForm onSearch={this.performSearch} />
-                  <ResultList searchText={this.state.searchText} gifs={this.state.gifs} tracks={this.state.tracks} />
-              </div>
-            ) : 
-            (
-              <SignUpOrSignIn handleLoggedStatus={this.handleLoggedStatus}/>
-
-              )}
-            </main>
-          <Footer />
-        </div>
-    );
-  }
+  return (
+      <div id="MainContainer" className='main-container'>
+        <Header username={this.state.username} />
+        {logoutButton}
+        <main className="main-content">
+          {isLoggedIn ? (
+              <div>
+                <SearchForm onSearch={this.performSearch} />
+                <ResultList searchText={this.state.searchText} gifs={this.state.gifs} tracks={this.state.tracks} />
+            </div>
+          ) : 
+          (
+            <Login handleLogin={this.handleLogin}/>
+            )}
+          </main>
+        <Footer />
+      </div>
+  );
+}
 }
 
 export default App;

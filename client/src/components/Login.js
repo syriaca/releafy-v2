@@ -6,7 +6,6 @@ export default class SignUpForm extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             user:{
                 username: '',
@@ -29,19 +28,23 @@ export default class SignUpForm extends Component {
     };
     
     handleSubmit(event) {
-        axios.post('/api/users', this.state.user)
+        if(this.state.user.username == "" || this.state.user.password == "") {
+            event.preventDefault();
+        } else {
+            axios.post('/api/users', this.state.user)
             .then(function (response) {
                 console.log(response);
             })
             .catch(function (error) {
                 console.log(error);
             });
-        event.preventDefault();
-        this.props.handleLoggedStatus(this.state.user.username)
-        this.setState({
-            isLoggedIn: true,
-            username: this.state.user.username
-        })
+            event.preventDefault();
+            this.props.handleLogin(this.state.user.username)
+            this.setState({
+                isLoggedIn: true,
+                username: this.state.user.username
+            })
+        }
     };
     
     render(){
@@ -49,11 +52,11 @@ export default class SignUpForm extends Component {
             <form id="signUpForm" method="POST" className="signup-form form-inline" onSubmit={this.handleSubmit}>
                 <FormGroup controlId="username">
                     <ControlLabel>Enter a username</ControlLabel>
-                    <FormControl name="username" type="text" value={this.state.username} onChange={this.handleInputChange} placeholder="Choose a beautiful username" />
+                    <FormControl name="username" type="text" value={this.state.username} onChange={this.handleInputChange} placeholder="Choose a beautiful username" required/>
                 </FormGroup>
                 <FormGroup controlId="password">
                     <ControlLabel>Enter a password</ControlLabel>
-                    <FormControl name="password" type="password" value={this.state.password} onChange={this.handleInputChange} placeholder="Choose a strong password" />
+                    <FormControl name="password" type="password" value={this.state.password} onChange={this.handleInputChange} placeholder="Choose a strong password" required/>
                 </FormGroup>
                 <Button bsStyle="primary" bsSize="large" type="submit" block>
                     Sign Up
