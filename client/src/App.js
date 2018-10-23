@@ -19,7 +19,7 @@ class App extends Component {
       tracks: [],
       searchText: '',
       username: '',
-      isLoggedIn: false
+      isLogged: false
     };
 
     this.handleLogin = this.handleLogin.bind(this);
@@ -35,7 +35,7 @@ performSearch = (query) => {
       });
     })
   .catch((error) =>{
-    console.log('Error fetching and parsing giphy data',  error);
+    console.log('Error fetching and parsing Giphy data',  error);
   });
 
   axios.get(`/api/spotify/spotify/${query}`)
@@ -45,41 +45,43 @@ performSearch = (query) => {
         });  
     })
     .catch(function (error) {
-      console.log('Error fetching and parsing spotify data',  error);
+      console.log('Error fetching and parsing Spotify data',  error);
     });
 }
 
+// Method to handle user login
 handleLogin(username) {
   const cookies = new Cookies();
   cookies.set('username', username, { path: '/' });
   this.setState({
-    isLoggedIn: true,
+    isLogged: true,
     username: username
   })
 }
 
+// Method to handle user logout
 handleLogout(username) {
   cookies.remove('username');
   this.setState({
-    isLoggedIn: false,
+    isLogged: false,
     username: ""
   })
 }
 
 render() {
-  const isLoggedIn = this.state.isLoggedIn;
+  const isLogged = this.state.isLogged;
   let logoutButton;
 
-  if (isLoggedIn) {
-    logoutButton = <Button onClick={this.handleLogout} className="btn-default btn" type="submit">Logout</Button>  
+  if (isLogged) {
+    logoutButton = <Button onClick={this.handleLogout} className="btn-default btn btn-logout" type="submit">Logout</Button>  
   }
 
   return (
-      <div id="MainContainer" className='main-container'>
-        <Header username={this.state.username} />
+      <div id="MainContainer" className='main-container container'>
+        <Header username={this.state.username} isLogged={this.state.isLogged}/>
         {logoutButton}
         <main className="main-content">
-          {isLoggedIn ? (
+          {isLogged ? (
               <div>
                 <SearchForm onSearch={this.performSearch} />
                 <ResultList searchText={this.state.searchText} gifs={this.state.gifs} tracks={this.state.tracks} />

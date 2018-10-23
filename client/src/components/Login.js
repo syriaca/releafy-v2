@@ -41,7 +41,7 @@ export default class SignUpForm extends Component {
             event.preventDefault();
             this.props.handleLogin(this.state.user.username)
             this.setState({
-                isLoggedIn: true,
+                isLogged: true,
                 username: this.state.user.username
             })
         }
@@ -49,7 +49,7 @@ export default class SignUpForm extends Component {
     
     render(){
         return(
-            <form id="signUpForm" method="POST" className="signup-form form-inline" onSubmit={this.handleSubmit}>
+            <form id="signUpForm" method="POST" className="signup-form" onSubmit={this.handleSubmit}>
                 <FormGroup controlId="username">
                     <ControlLabel>Enter a username</ControlLabel>
                     <FormControl name="username" type="text" value={this.state.username} onChange={this.handleInputChange} placeholder="Choose a beautiful username" required/>
@@ -58,7 +58,7 @@ export default class SignUpForm extends Component {
                     <ControlLabel>Enter a password</ControlLabel>
                     <FormControl name="password" type="password" value={this.state.password} onChange={this.handleInputChange} placeholder="Choose a strong password" required/>
                 </FormGroup>
-                <Button bsStyle="primary" bsSize="large" type="submit" block>
+                <Button bsStyle="default" bsSize="large" type="submit" block>
                     Sign Up
                 </Button>
             </form>

@@ -22,6 +22,7 @@ ul {
 }
 
 .main-container {
+  position: relative;
   text-align: center;
 }
 
@@ -29,9 +30,10 @@ ul {
 .btn-default {
   background-color: var(--main-color);
   font-weight: bold;
+  border: none;
 }
 
-.form-group + .btn {
+form:not(.signup-form) .form-group + .btn {
   margin-left: .5rem;
 }
 
@@ -42,7 +44,8 @@ ul {
 
 /* HEADER */
 .header-slogan {
-  margin: 0;
+  font-size: 1rem;
+  margin: 0 0 4rem 0;
 }
 
 /* SEARCH RESULT COMPONENT */
@@ -53,7 +56,7 @@ ul {
 
 /* GIFS COMPONENT */
 .gif-list__item {
-  min-height: 15.625rem;
+  min-height: 11.625rem;
 }
 
 .gif-list__image {
@@ -62,6 +65,7 @@ ul {
 
 /* TRACK COMPONENT */
 .track-list__item-player {
+  margin-left: -2.5rem;
   transform: scale(.7);
 }
 
@@ -71,4 +75,27 @@ ul {
 
 .track-list__item-heading--small {
   font-size: 75%;
+}
+
+.btn-logout {
+  background-color: #ff5722;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #fff;
+}
+
+.header {
+  margin-bottom: 3rem;
+}
+
+/* Signup-form */
+
+.signup-form  {
+  margin: 0 auto;
+  width: 400px;
+}
+
+.signup-form .control-label {
+  margin-right: 1rem;
 }
