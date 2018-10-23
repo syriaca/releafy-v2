@@ -1,8 +1,7 @@
 const express = require('express');
 const request = require('request');
-const keys = require('../../config/keys.js');
 const router = express.Router();
-const giphyKey = process.env.GIPHY_KEY || keys.GIPHY_KEY;
+const giphyKey = process.env.GIPHY_KEY || require('../../config/keys.js').GIPHY_KEY;
 
 
 // @Route   Get api/token

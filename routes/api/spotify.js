@@ -1,9 +1,8 @@
 const express = require('express');
 const request = require('request');
-const keys = require('../../config/keys');
 const router = express.Router();
-const spotifyClientId = process.env.SPOTIFY_CLIENT_ID || keys.SPOTIFY_CLIENT_ID;
-const spotifySecret = process.env.SPOTIFY_SECRET || keys.SPOTIFY_SECRET;
+const spotifyClientId = process.env.SPOTIFY_CLIENT_ID || require('../../config/keys.js').SPOTIFY_CLIENT_ID;
+const spotifySecret = process.env.SPOTIFY_SECRET || require('../../config/keys.js').SPOTIFY_SECRET;
 
 // @Route   Get spotify/:query
 // @Desc    Get spotify api token and make a search limited to 3 tracks

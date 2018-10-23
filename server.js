@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const keys = require('./config/keys.js');
 const users = require('./routes/api/users');
 const spotify = require('./routes/api/spotify');
 const giphy = require('./routes/api/giphy');
@@ -15,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 // DB Config
-const database = process.env.MONGO_URI || keys.MONGO_URI;
+const database = process.env.MONGO_URI || require('./config/keys.js').MONGO_URI;
 
 // Connect to MongoDB
 mongoose

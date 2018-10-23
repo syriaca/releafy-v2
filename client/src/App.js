@@ -26,14 +26,6 @@ class App extends Component {
     this.handleLogout = this.handleLogout.bind(this);
 }
 
-// componentDidMount() {
-//   if(cookies.get('username')){
-//     this.setState({
-//       isLoggedIn: true
-//     })
-//   }
-// }
-
 // Perform giphy and spotify search
 performSearch = (query) => {
   axios.get(`/api/giphy/giphy/${query}`)
