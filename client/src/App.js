@@ -23,19 +23,6 @@ class App extends Component {
     this.handleLoggedStatus = this.handleLoggedStatus.bind(this);
 }
 
-componentDidMount() {
-  // axios.get('/api/users/spotify')
-  // .then(response => {
-  //   console.log(response);
-  //     this.setState({
-  //       tracks: response.data.body.tracks.items
-  //     });  
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
-}
-
 performSearch = (query) => {
   axios.get(`/api/giphy/giphy/${query}`)
   .then(response => {
