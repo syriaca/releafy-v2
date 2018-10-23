@@ -17,7 +17,7 @@ class App extends Component {
       tracks: [],
       searchText: '',
       username: cookies.get('username'),
-      isLoggedIn: true      
+      isLoggedIn: false
     };
 
     this.handleLoggedStatus = this.handleLoggedStatus.bind(this);

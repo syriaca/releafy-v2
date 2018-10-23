@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 // DB Config
-const database = process.env.MONGO_URI || keys.mongoURI;
+const database = process.env.MONGO_URI || keys.MONGO_URI;
 
 // Connect to MongoDB
 mongoose
