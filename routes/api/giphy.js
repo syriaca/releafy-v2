@@ -3,9 +3,8 @@ const request = require('request');
 const router = express.Router();
 const giphyKey = process.env.GIPHY_KEY || require('../../config/keys.js').GIPHY_KEY;
 
-
-// @Route   Get api/token
-// @Desc    Get giphy 
+// @Route   Get /giphy/:query
+// @Desc    Get 3 giphy gifs 
 // @Access  Private
 router.get('/giphy/:query', (req, res) => {
     var options = {json: true};
